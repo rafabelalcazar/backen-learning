@@ -4,10 +4,13 @@
 var express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-    //Import routes
+
+//Import routes
 const appRoutes = require('./src/routes/main')
 const userRoutes = require('./src/routes/usuario')
 const loginRoutes = require('./src/routes/login')
+const hospitalRoutes = require('./src/routes/hospital')
+
 
 // INICIALIZAR VARIABLES
 var app = express()
@@ -25,9 +28,13 @@ mongoose.connect('mongodb://localhost:27017/hospitalDB', { useNewUrlParser: true
 })
 
 // ROUTES
+// userRoutes
 app.use('/', appRoutes)
 app.use('/login', loginRoutes)
 app.use('/usuario', userRoutes)
+
+// hospitalRoutes
+app.use('/hospital', hospitalRoutes)
 
 
 // LISTEN REQUEST ON PORT

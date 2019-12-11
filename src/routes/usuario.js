@@ -26,9 +26,6 @@ app.get('/', (req, res, next) => {
     )
 })
 
-// TOKEN VALIDATE
-
-
 // CREATE A NEW USER
 app.post('/', mdwareAuth.validateToken, (req, res) => {
     var body = req.body
@@ -63,7 +60,7 @@ app.post('/', mdwareAuth.validateToken, (req, res) => {
 
 // UPDATE USER
 app.put('/:id', (req, res) => {
-    var id = req.params.id
+    const id = req.params.id
     var { nombre, email, role } = req.body
 
     Usuario.findById(id, (err, user) => {
