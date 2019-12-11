@@ -1,6 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
-
+var mdwareAuth = require('../middlewares/auth')
 var app = express()
 
 var Usuario = require('../models/usuario')
@@ -26,8 +26,11 @@ app.get('/', (req, res, next) => {
     )
 })
 
+// TOKEN VALIDATE
+
+
 // CREATE A NEW USER
-app.post('/', (req, res) => {
+app.post('/', mdwareAuth.validateToken, (req, res) => {
     var body = req.body
 
     var user = new Usuario({
@@ -52,7 +55,8 @@ app.post('/', (req, res) => {
         res.status(201).json({
             ok: true,
             msg: 'user created',
-            userCreated
+            userCreated,
+            userToken: req.usuario
         })
     })
 })

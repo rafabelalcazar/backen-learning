@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
     //Import routes
 const appRoutes = require('./src/routes/main')
 const userRoutes = require('./src/routes/usuario')
+const loginRoutes = require('./src/routes/login')
 
 // INICIALIZAR VARIABLES
 var app = express()
@@ -14,8 +15,7 @@ var app = express()
 // MIDDLEWARE
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-
-// parse application/json
+    // parse application/json
 app.use(bodyParser.json())
 
 // DB connect
@@ -26,6 +26,7 @@ mongoose.connect('mongodb://localhost:27017/hospitalDB', { useNewUrlParser: true
 
 // ROUTES
 app.use('/', appRoutes)
+app.use('/login', loginRoutes)
 app.use('/usuario', userRoutes)
 
 
