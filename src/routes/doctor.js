@@ -97,7 +97,7 @@ app.put('/:id', mdwareAuth.validateToken, (req, res) => {
 })
 
 // DELETE A DOCTOR
-app.delete('/:id', (req, res) => {
+app.delete('/:id', mdwareAuth.validateToken, (req, res) => {
 
     const id = req.params.id
 
