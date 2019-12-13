@@ -19,7 +19,7 @@ app.get('/', (req, res, next) => {
 
             res.status(200).json({
                 ok: true,
-                msg: 'Get users',
+                msg: 'Listar usuarios',
                 users
             })
         }
