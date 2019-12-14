@@ -9,21 +9,36 @@ var app = express()
 
 // GET ALL HOSPITALS
 app.get('/', (req, res) => {
+    const offset = Number(req.query.offset || 0)
     Hospital.find({}, (err, hospitals) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                msg: 'Error al cargar hospitales',
-                errors: err
-            })
-        }
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    msg: 'Error al cargar hospitales',
+                    errors: err
+                })
+            }
 
-        res.status(200).json({
-            ok: true,
-            msg: 'Listar hospitales',
-            hospitals
-        })
-    })
+            Hospital.countDocuments({}, (err, total) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        msg: 'Error al contar hospitales',
+                        errors: err
+                    })
+                }
+
+                res.status(200).json({
+                    ok: true,
+                    msg: 'Listar hospitales',
+                    hospitals,
+                    total
+                })
+            })
+
+        }).populate('user', 'nombre email')
+        .limit(5)
+        .skip(offset)
 })
 
 // CREATE A NEW HOSPITAL

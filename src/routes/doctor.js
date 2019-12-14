@@ -7,20 +7,34 @@ var Doctor = require('../models/doctor')
 
 // GET ALL DOCTORS
 app.get('/', (req, res) => {
+    const offset = Number(req.query.offset || 0)
     Doctor.find({}, (err, doctors) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                msg: 'Error al cargar doctores',
-                errors: err
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    msg: 'Error al cargar doctores',
+                    errors: err
+                })
+            }
+            Doctor.countDocuments({}, (err, total) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        msg: 'Error al contar doctores',
+                        errors: err
+                    })
+                }
+                res.status(200).json({
+                    ok: true,
+                    msg: 'Listar Doctores',
+                    doctors,
+                    total
+                })
+
             })
-        }
-        res.status(200).json({
-            ok: true,
-            msg: 'Listar Doctores',
-            doctors
-        })
-    })
+        }).populate('user', 'nombre email').populate('hospital')
+        .limit(5)
+        .skip(offset) //desde
 })
 
 // CREATE A DOCTOR

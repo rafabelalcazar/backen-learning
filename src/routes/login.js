@@ -41,8 +41,9 @@ app.post('/', (req, res) => {
         // Credentials right
 
         // CREATE TOKEN
-        // tokenActive live in hours
-        const tokenActive = 3600
+        // tokenActive: live in hours
+        const _HOUR = 3600
+        const tokenActive = 24 * _HOUR
 
         var token = jwt.sign({ usuario: userFound }, SEED, { expiresIn: tokenActive })
         res.status(200).json({
