@@ -12,6 +12,7 @@ const loginRoutes = require('./src/routes/login')
 const hospitalRoutes = require('./src/routes/hospital')
 const doctorRoutes = require('./src/routes/doctor')
 const busquedaRoutes = require('./src/routes/busqueda')
+const uploadRoutes = require('./src/routes/upload')
 
 
 // INICIALIZAR VARIABLES
@@ -41,6 +42,9 @@ app.use('/hospital', hospitalRoutes)
 // doctorRoutes
 app.use('/doctor', doctorRoutes)
 app.use('/busqueda', busquedaRoutes)
+
+// Upload images
+app.use('/upload', uploadRoutes)
 
 
 // LISTEN REQUEST ON PORT
